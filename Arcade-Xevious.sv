@@ -51,6 +51,9 @@ module emu
 	output        VGA_DE,    // = ~(VBlank | HBlank)
 	output        VGA_F1,
 	output [1:0]  VGA_SL,
+	output [2:0]  SHADOWMASK, //Type of HDMI shadowmask overlay
+	output        MASK_ROTATE,
+	output        MASK_2X,
 	output        VGA_SCALER, // Force VGA scaler
 
 	input  [11:0] HDMI_WIDTH,
@@ -128,6 +131,9 @@ assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 assign AUDIO_MIX = 0;
+assign SHADOWMASK = status[29:27];
+assign MASK_2X = status[30];
+assign MASK_ROTATE = status[31];
 
 assign {FB_PAL_CLK, FB_FORCE_BLANK, FB_PAL_ADDR, FB_PAL_DOUT, FB_PAL_WR} = '0;
 
@@ -143,6 +149,9 @@ localparam CONF_STR = {
 	"H0OJK,Aspect ratio,Original,Full Screen,[ARC1],[ARC2];",
 	"H0O2,Orientation,Vert,Horz;",
 	"O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
+	"ORT,Shadow Mask,None,Shadow 1,Shadow 2,RGB Stripe,MG Stripe,Mono Stripe,RYCB Stripe;",
+	"OU,Mask Double Size,No,Yes;",
+	"OV,Mask Rotate,No,Yes;",
 	"-;",
 // LOOK AT GALAGA
 	"O89,Lives,3,1,2,5;",
